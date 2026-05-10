@@ -3,7 +3,7 @@ model_list:
   - model_name: openai-120b
     litellm_params:
       model: openai/openai-120b
-      api_base: http://host.docker.internal:8000
+      api_base: http://103.106.222.145:443/v1
       api_key: dummy
 
 router_settings:
