@@ -1,0 +1,10 @@
+model_list:
+
+  - model_name: openai-120b
+    litellm_params:
+      model: openai/openai-120b
+      api_base: http://host.docker.internal:8000
+      api_key: dummy
+
+router_settings:
+  routing_strategy: simple-shuffle
