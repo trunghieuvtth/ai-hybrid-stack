@@ -1,10 +1,10 @@
 model_list:
 
-  - model_name: openai-120b
+  - model_name: gpt-oss-120b
     litellm_params:
-      model: openai/openai-120b
+      model: /var/lib/vllm/hf/gpt-oss-120b
       api_base: http://103.106.222.145:443/v1
-      api_key: dummy
+      api_key: os.environ/OPENAI_API_KEY
 
 router_settings:
   routing_strategy: simple-shuffle
