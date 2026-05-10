@@ -4,21 +4,30 @@ services:
     container_name: litellm
     ports:
       - "4000:4000"
+    env_file:
+      - .env
     volumes:
       - ./litellm/config.yaml:/app/config.yaml
+      - litellm_data:/app/data
     command:
       - "--config=/app/config.yaml"
+    restart: unless-stopped
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui
     ports:
       - "3000:8080"
+    env_file:
+      - .env
     environment:
       - OPENAI_API_BASE_URL=http://litellm:4000/v1
       - OPENAI_API_KEY=dummy
+    volumes:
+      - openwebui_data:/app/backend/data
     depends_on:
       - litellm
+    restart: unless-stopped
 
   n8n:
     image: n8nio/n8n
@@ -27,9 +36,21 @@ services:
       - "5678:5678"
     environment:
       - N8N_SECURE_COOKIE=false
+    volumes:
+      - n8n_data:/home/node/.n8n
+    restart: unless-stopped
 
   qdrant:
     image: qdrant/qdrant
     container_name: qdrant
     ports:
       - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+
+volumes:
+  litellm_data:
+  openwebui_data:
+  n8n_data:
+  qdrant_data:
